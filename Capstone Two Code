@@ -1,0 +1,527 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "9c3c3589-9859-415e-8605-93b93846473a",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Requirement already satisfied: pandas in ./opt/anaconda3/lib/python3.9/site-packages (1.4.2)\n",
+      "Requirement already satisfied: python-dateutil>=2.8.1 in ./opt/anaconda3/lib/python3.9/site-packages (from pandas) (2.8.2)\n",
+      "Requirement already satisfied: pytz>=2020.1 in ./opt/anaconda3/lib/python3.9/site-packages (from pandas) (2021.3)\n",
+      "Requirement already satisfied: numpy>=1.18.5 in ./opt/anaconda3/lib/python3.9/site-packages (from pandas) (1.21.5)\n",
+      "Requirement already satisfied: six>=1.5 in ./opt/anaconda3/lib/python3.9/site-packages (from python-dateutil>=2.8.1->pandas) (1.16.0)\n",
+      "Note: you may need to restart the kernel to use updated packages.\n"
+     ]
+    }
+   ],
+   "source": [
+    "pip install pandas"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "40fbce87-14d7-4f9e-8155-5580a528ae75",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Requirement already satisfied: openpyxl in ./opt/anaconda3/lib/python3.9/site-packages (3.0.9)\n",
+      "Requirement already satisfied: et-xmlfile in ./opt/anaconda3/lib/python3.9/site-packages (from openpyxl) (1.1.0)\n",
+      "Note: you may need to restart the kernel to use updated packages.\n"
+     ]
+    }
+   ],
+   "source": [
+    "pip install openpyxl"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "da5e85f2-9bae-4057-86d8-0f499bab5089",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "96c5d6df-b07f-4d30-bd0d-d43538ec5b40",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                    Employee ID Date of Joining  Gender Company Type  \\\n",
+      "0      fffe32003000360033003200      2008-09-30  Female      Service   \n",
+      "1          fffe3700360033003500      2008-11-30    Male      Service   \n",
+      "2      fffe31003300320037003900      2008-03-10  Female      Product   \n",
+      "3      fffe32003400380032003900      2008-11-03    Male      Service   \n",
+      "4      fffe31003900340031003600      2008-07-24  Female      Service   \n",
+      "...                         ...             ...     ...          ...   \n",
+      "22745  fffe31003500370039003100      2008-12-30  Female      Service   \n",
+      "22746  fffe33003000350031003800      2008-01-19  Female      Product   \n",
+      "22747          fffe390032003000      2008-11-05    Male      Service   \n",
+      "22748  fffe33003300320036003900      2008-01-10  Female      Service   \n",
+      "22749      fffe3400350031003800      2008-01-06    Male      Product   \n",
+      "\n",
+      "      WFH Setup Available  Designation  Resource Allocation  \\\n",
+      "0                      No            2                  3.0   \n",
+      "1                     Yes            1                  2.0   \n",
+      "2                     Yes            2                  NaN   \n",
+      "3                     Yes            1                  1.0   \n",
+      "4                      No            3                  7.0   \n",
+      "...                   ...          ...                  ...   \n",
+      "22745                  No            1                  3.0   \n",
+      "22746                 Yes            3                  6.0   \n",
+      "22747                 Yes            3                  7.0   \n",
+      "22748                  No            2                  5.0   \n",
+      "22749                  No            3                  6.0   \n",
+      "\n",
+      "       Mental Fatigue Score  Burn Rate  Unnamed: 9  \\\n",
+      "0                       3.8       0.16         NaN   \n",
+      "1                       5.0       0.36         NaN   \n",
+      "2                       5.8       0.49         NaN   \n",
+      "3                       2.6       0.20         NaN   \n",
+      "4                       6.9       0.52         NaN   \n",
+      "...                     ...        ...         ...   \n",
+      "22745                   NaN       0.41         NaN   \n",
+      "22746                   6.7       0.59         NaN   \n",
+      "22747                   NaN       0.72         NaN   \n",
+      "22748                   5.9       0.52         NaN   \n",
+      "22749                   7.8       0.61         NaN   \n",
+      "\n",
+      "       Length of Employment in Months  Unnamed: 11 Unnamed: 12  \n",
+      "0                            3.000000          NaN  2008-12-31  \n",
+      "1                            1.000000          NaN         NaT  \n",
+      "2                            9.700000          NaN         NaT  \n",
+      "3                            1.933333          NaN         NaT  \n",
+      "4                            5.233333          NaN         NaT  \n",
+      "...                               ...          ...         ...  \n",
+      "22745                        0.000000          NaN         NaT  \n",
+      "22746                       11.400000          NaN         NaT  \n",
+      "22747                        1.866667          NaN         NaT  \n",
+      "22748                       11.700000          NaN         NaT  \n",
+      "22749                       11.833333          NaN         NaT  \n",
+      "\n",
+      "[22750 rows x 13 columns]\n"
+     ]
+    }
+   ],
+   "source": [
+    "df = pd.read_excel(r'/Users/ashleyyates/Library/Containers/com.microsoft.Excel/Data/Downloads/Capstone Two Dataset.xlsx')\n",
+    "print(df)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "3b322184-8fd5-4f5d-bf31-90f9abd7039d",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0        3.8\n",
+       "1        5.0\n",
+       "2        5.8\n",
+       "3        2.6\n",
+       "4        6.9\n",
+       "        ... \n",
+       "22745    NaN\n",
+       "22746    6.7\n",
+       "22747    NaN\n",
+       "22748    5.9\n",
+       "22749    7.8\n",
+       "Name: Mental Fatigue Score, Length: 22750, dtype: float64"
+      ]
+     },
+     "execution_count": 25,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.iloc[:,7]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "id": "fb65a0ef-5522-4ac6-895a-b2c4598d974e",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "6.0    470\n",
+       "5.8    464\n",
+       "5.9    458\n",
+       "6.1    457\n",
+       "6.3    454\n",
+       "      ... \n",
+       "0.5     24\n",
+       "0.2     23\n",
+       "0.4     19\n",
+       "0.1     17\n",
+       "0.3     13\n",
+       "Name: Mental Fatigue Score, Length: 101, dtype: int64"
+      ]
+     },
+     "execution_count": 30,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df['Mental Fatigue Score'].value_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "id": "dcfc609a-0378-4038-b55f-15b72b240e1b",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Mental Fatigue Score  WFH Setup Available\n",
+       "0.0                   No                      52\n",
+       "                      Yes                    119\n",
+       "0.1                   No                       7\n",
+       "                      Yes                     10\n",
+       "0.2                   No                       9\n",
+       "                                            ... \n",
+       "9.8                   Yes                     13\n",
+       "9.9                   No                      20\n",
+       "                      Yes                      7\n",
+       "10.0                  No                      85\n",
+       "                      Yes                     34\n",
+       "Length: 202, dtype: int64"
+      ]
+     },
+     "execution_count": 36,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.groupby([\"Mental Fatigue Score\", \"WFH Setup Available\"]). size()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 82,
+   "id": "8d83d388-2c8f-4b8d-9085-812a16e28488",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "       Mental Fatigue Score  Gender\n",
+      "0                       3.8  Female\n",
+      "1                       5.0    Male\n",
+      "2                       5.8  Female\n",
+      "3                       2.6    Male\n",
+      "4                       6.9  Female\n",
+      "...                     ...     ...\n",
+      "22745                   NaN  Female\n",
+      "22746                   6.7  Female\n",
+      "22747                   NaN    Male\n",
+      "22748                   5.9  Female\n",
+      "22749                   7.8    Male\n",
+      "\n",
+      "[22750 rows x 2 columns]\n"
+     ]
+    }
+   ],
+   "source": [
+    "Gender = df[[\"Mental Fatigue Score\", \"Gender\"]].copy()\n",
+    "print(Gender)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 87,
+   "id": "3ebe4cab-01cc-48ee-96fd-e2a9cb874763",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "     Mental Fatigue Score  Gender  Count\n",
+      "0                     0.0  Female     98\n",
+      "1                     0.0    Male     73\n",
+      "2                     0.1  Female      6\n",
+      "3                     0.1    Male     11\n",
+      "4                     0.2  Female     12\n",
+      "..                    ...     ...    ...\n",
+      "197                   9.8    Male     29\n",
+      "198                   9.9  Female     13\n",
+      "199                   9.9    Male     14\n",
+      "200                  10.0  Female     49\n",
+      "201                  10.0    Male     70\n",
+      "\n",
+      "[202 rows x 3 columns]\n"
+     ]
+    }
+   ],
+   "source": [
+    "Gender_Count = Gender.groupby([\"Mental Fatigue Score\", \"Gender\"]).size().reset_index(name='Count')\n",
+    "print(Gender_Count)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 90,
+   "id": "e08605bf-5db3-48d1-87ee-f66620aeb981",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Gender_Count.rename({'Mental Fatigue Score':'MFS'}, axis = 1, inplace = True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 92,
+   "id": "dfbb9fb1-5a15-449a-aa07-00fa11024cc5",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "      MFS  Gender  Count\n",
+      "0     0.0  Female     98\n",
+      "1     0.0    Male     73\n",
+      "2     0.1  Female      6\n",
+      "3     0.1    Male     11\n",
+      "4     0.2  Female     12\n",
+      "..    ...     ...    ...\n",
+      "197   9.8    Male     29\n",
+      "198   9.9  Female     13\n",
+      "199   9.9    Male     14\n",
+      "200  10.0  Female     49\n",
+      "201  10.0    Male     70\n",
+      "\n",
+      "[202 rows x 3 columns]\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(Gender_Count)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 93,
+   "id": "550bc6ab-bc40-4094-b207-70a1216b0254",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Requirement already satisfied: matplotlib in ./opt/anaconda3/lib/python3.9/site-packages (3.5.1)\n",
+      "Requirement already satisfied: kiwisolver>=1.0.1 in ./opt/anaconda3/lib/python3.9/site-packages (from matplotlib) (1.3.2)\n",
+      "Requirement already satisfied: pillow>=6.2.0 in ./opt/anaconda3/lib/python3.9/site-packages (from matplotlib) (9.0.1)\n",
+      "Requirement already satisfied: fonttools>=4.22.0 in ./opt/anaconda3/lib/python3.9/site-packages (from matplotlib) (4.25.0)\n",
+      "Requirement already satisfied: cycler>=0.10 in ./opt/anaconda3/lib/python3.9/site-packages (from matplotlib) (0.11.0)\n",
+      "Requirement already satisfied: packaging>=20.0 in ./opt/anaconda3/lib/python3.9/site-packages (from matplotlib) (21.3)\n",
+      "Requirement already satisfied: numpy>=1.17 in ./opt/anaconda3/lib/python3.9/site-packages (from matplotlib) (1.21.5)\n",
+      "Requirement already satisfied: python-dateutil>=2.7 in ./opt/anaconda3/lib/python3.9/site-packages (from matplotlib) (2.8.2)\n",
+      "Requirement already satisfied: pyparsing>=2.2.1 in ./opt/anaconda3/lib/python3.9/site-packages (from matplotlib) (3.0.4)\n",
+      "Requirement already satisfied: six>=1.5 in ./opt/anaconda3/lib/python3.9/site-packages (from python-dateutil>=2.7->matplotlib) (1.16.0)\n",
+      "Note: you may need to restart the kernel to use updated packages.\n"
+     ]
+    }
+   ],
+   "source": [
+    "pip install matplotlib"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 94,
+   "id": "b1345891-ba07-4be2-8ddb-119bd413fb33",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import matplotlib.pyplot as plt"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 122,
+   "id": "c142fba7-0981-475f-b218-1fee42d5a5fa",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 123,
+   "id": "3cef3cbd-2aa7-446d-88a3-590a4acc61df",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Yes    12290\n",
+       "No     10460\n",
+       "Name: WFH Setup Available, dtype: int64"
+      ]
+     },
+     "execution_count": 123,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df['WFH Setup Available'].value_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 154,
+   "id": "9bf6857b-d214-49cc-831d-100320f0746a",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "       Mental Fatigue Score WFH Setup Available\n",
+      "0                       3.8                  No\n",
+      "1                       5.0                 Yes\n",
+      "2                       5.8                 Yes\n",
+      "3                       2.6                 Yes\n",
+      "4                       6.9                  No\n",
+      "...                     ...                 ...\n",
+      "22745                   NaN                  No\n",
+      "22746                   6.7                 Yes\n",
+      "22747                   NaN                 Yes\n",
+      "22748                   5.9                  No\n",
+      "22749                   7.8                  No\n",
+      "\n",
+      "[22750 rows x 2 columns]\n"
+     ]
+    }
+   ],
+   "source": [
+    "WFH = df[[\"Mental Fatigue Score\", \"WFH Setup Available\"]].copy()\n",
+    "print(WFH)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 155,
+   "id": "35024344-2bb8-4a93-9e7d-0fc35008522a",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Yes    12290\n",
+       "No     10460\n",
+       "Name: WFH Setup Available, dtype: int64"
+      ]
+     },
+     "execution_count": 155,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df['WFH Setup Available'].value_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 156,
+   "id": "6d4faa18-1cd9-45b1-beae-3b0cd81f0170",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "WFH_Count = pd.DataFrame({'Yes/No' : ['Yes', 'No'], 'Amount': [12290, 10460]})"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 160,
+   "id": "0433d08a-61e0-4289-a972-67179f2a3f7c",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<function matplotlib.pyplot.show(close=None, block=None)>"
+      ]
+     },
+     "execution_count": 160,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "plt.pie(WFH_Count[\"Amount\"], labels=WFH_Count[\"Yes/No\"])\n",
+    "plt.show"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "68ad27eb-2bf4-49c0-9739-4d89b2f43a0f",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.12"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
